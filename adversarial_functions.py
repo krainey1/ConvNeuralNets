@@ -119,58 +119,72 @@ def fast_gradient(label_idx, labels, output, img_var, resnet):
 
 def main():
     resnet = models.resnet50(pretrained=True)
-    img = Image.open("/home/katelynn/Downloads/__MACOSX/img_7_v1.png").convert('RGB')
-    resnet.eval()
-    preprocess = transforms.Compose([
-        transforms.Resize(256),
-        #transforms.ColorJitter(brightness=5, contrast=5, saturation=5, hue=0),
-        transforms.ToTensor(),
-        transforms.Normalize(
-        mean=[0.485, 0.456, 0.406],
-        std=[0.229, 0.224, 0.225]
-    )])
+    #img = Image.open("/home/katelynn/Downloads/__MACOSX/img_7_v1.png").convert('RGB')
+    #aengus jank code
+        
+    with open('/home/katelynn/Desktop/images.txt') as file:
+        for line in file:
+            #print(line)
+            #images=((file.readlines())[line]).replace("\n", "")
+            line = line.replace("\n", "")
+            print(line)
+            #print(images)
+            #f"/home/katelynn/Desktop/kateylnnn_sample_images/{images}"
+            img = Image.open(f"/home/katelynn/Desktop/katelynnn_sample_images/{line}")
+    
+            resnet.eval()
+            preprocess = transforms.Compose([
+                 #transforms.Resize(256),
+                 #transforms.ColorJitter(brightness=5, contrast=5, saturation=5, hue=0),
+                 transforms.ToTensor(),
+                 transforms.Normalize(
+                     mean=[0.485, 0.456, 0.406],
+                     std=[0.229, 0.224, 0.225]
+                 )])
 
-    img_tensor = preprocess(img) 
-    img_tensor = img_tensor.unsqueeze(0)
-    img_var = Variable(img_tensor, requires_grad=True)
+            img_tensor = preprocess(img) 
+            img_tensor = img_tensor.unsqueeze(0)
+            img_var = Variable(img_tensor, requires_grad=True)
 
-    output = resnet.forward(img_var)
-    label_idx = torch.max(output.data, 1)[1][0]   #get an index(class number) of a largest element
-   
-    with open('/home/katelynn/Desktop/imagenet_classes.txt') as f:
-        labels = [line.strip() for line in f.readlines()]
-    img_out = labels[label_idx]
-    print("Original Confidence:")
-    print(img_out)
+            output = resnet.forward(img_var)
+            label_idx = torch.max(output.data, 1)[1][0]   #get an index(class number) of a largest element
 
-#calculates probability
-    _, index = torch.max(output, 1)
-    prob = torch.nn.functional.softmax(output, dim=1)[0] * 100
-    percentage = round(prob[index[0]].item(), 4)
-    print(percentage)
-    #runs the fast gradient sign method
-    print("Fast Gradient: ")
-    adv = fast_gradient(label_idx, labels, output, img_var, resnet)
-    for i in range(0, len(adv)):
-        print(adv[i])
-    #runs the one-step target class method
-    print("One-step target class: ")
-    adv_os = one_step_target(label_idx, labels, output, img_var, resnet)
-    for i in range(0, len(adv_os)):
-        print(adv_os[i])
+             #aengus jank code
 
-    #runs the basic iterative method
-    print("Basic Iterative:")
-    adv_bi = basic_iterative(label_idx, labels, output, img_var, img_tensor, resnet)
-    for i in range(0, len(adv_bi)):
-        print(adv_bi[i])
+            with open('/home/katelynn/Desktop/imagenet_classes.txt') as f:
+                labels = [line.strip() for line in f.readlines()]
+                img_out = labels[label_idx]
+                print("Original Confidence:")
+                print(img_out)
+                 
+         #calculates probability
+            _, index = torch.max(output, 1)
+            prob = torch.nn.functional.softmax(output, dim=1)[0] * 100
+            percentage = round(prob[index[0]].item(), 4)
+            print(percentage)
+            #runs the fast gradient sign method
+            print("Fast Gradient: ")
+            adv = fast_gradient(label_idx, labels, output, img_var, resnet)
+            for i in range(0, len(adv)):
+                print(adv[i])
+                #runs the one-step target class method
+            print("One-step target class: ")
+            adv_os = one_step_target(label_idx, labels, output, img_var, resnet)
+            for i in range(0, len(adv_os)):
+                print(adv_os[i])
 
-    #runs iterative target class method
-    print("Iterative Target Class:")
-    adv_it = iterative_target(label_idx, labels, output, img_var, img_tensor, resnet)
-    for i in range(0, len(adv_it)):
-        print(adv_it[i])
-                
+             #runs the basic iterative method
+            print("Basic Iterative:")
+            adv_bi = basic_iterative(label_idx, labels, output, img_var, img_tensor, resnet)
+            for i in range(0, len(adv_bi)):
+                print(adv_bi[i])
+
+             #runs iterative target class method
+            print("Iterative Target Class:")
+            adv_it = iterative_target(label_idx, labels, output, img_var, img_tensor, resnet)
+            for i in range(0, len(adv_it)):
+                print(adv_it[i])
+
 main()
 
 
