@@ -120,7 +120,7 @@ def fast_gradient(label_idx, labels, output, img_var, resnet):
 def main():
     resnet = models.resnet50(pretrained=True)
     #img = Image.open("/home/katelynn/Downloads/__MACOSX/img_7_v1.png").convert('RGB')
-    #aengus jank code
+    #aengus jank code 
         
     with open('/home/katelynn/Desktop/images.txt') as file:
         for line in file:
@@ -149,7 +149,7 @@ def main():
             output = resnet.forward(img_var)
             label_idx = torch.max(output.data, 1)[1][0]   #get an index(class number) of a largest element
 
-             #aengus jank code
+            
 
             with open('/home/katelynn/Desktop/imagenet_classes.txt') as f:
                 labels = [line.strip() for line in f.readlines()]
