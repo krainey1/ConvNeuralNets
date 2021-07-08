@@ -1,0 +1,137 @@
+Full Image Attacks:
+0.
+Original Confidence:
+Bernese mountain dog
+92.7617
+Fast Gradient: 
+EntleBucher
+46.2127
+One-step target class: 
+bubble
+55.4899
+Basic Iterative:
+EntleBucher
+98.6675
+Iterative Target Class:
+EntleBucher
+99.9394
+
+1.
+Original Confidence:
+pomegranate
+99.6971
+Fast Gradient: 
+strawberry
+28.1375
+One-step target class: 
+bubble
+41.0856
+Basic Iterative:
+strawberry
+66.7306
+Iterative Target Class:
+strawberry
+99.6729
+
+2.
+Original Confidence:
+killer whale
+99.9986
+Fast Gradient: 
+killer whale
+52.063
+One-step target class: 
+chain
+24.1208
+Basic Iterative:
+grasshopper
+33.6639
+Iterative Target Class:
+cricket
+52.5988
+
+
+3.
+Original Confidence:
+giant panda
+99.9989
+Fast Gradient: 
+giant panda
+95.03
+One-step target class: 
+titi
+26.2837
+Basic Iterative:
+zucchini
+90.727
+Iterative Target Class:
+zucchini
+99.9159
+
+4.
+Original Confidence:
+go-kart
+99.8777
+Fast Gradient: 
+crash helmet
+98.5951
+One-step target class: 
+bubble
+36.0363
+Basic Iterative:
+crash helmet
+99.9775
+Iterative Target Class:
+crash helmet
+99.997
+
+5.
+Original Confidence:
+earthstar
+99.9999
+Fast Gradient: 
+earthstar
+79.7952
+One-step target class: 
+earthstar
+42.1501
+Basic Iterative:
+stinkhorn
+99.9849
+Iterative Target Class:
+stinkhorn
+100.0
+
+6.
+Original Confidence:
+acorn
+99.7463
+Fast Gradient: 
+goldfinch
+26.4053
+One-step target class: 
+bubble
+26.7059
+Basic Iterative:
+chickadee
+80.8705
+Iterative Target Class:
+chickadee
+64.8567
+
+7.
+Original Confidence:
+ice bear
+99.9968
+Fast Gradient: 
+marmot
+70.0003
+One-step target class: 
+bubble
+9.2322
+Basic Iterative:
+marmot
+99.9986
+Iterative Target Class:
+marmot
+100.0
