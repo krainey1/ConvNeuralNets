@@ -1,24 +1,24 @@
+#import required libs
 import torch
 import torch.nn
-import torch.autograd.gradcheck
 import torch.nn.functional as F
 import torchvision.models as models
 from PIL import Image
 from torchvision import transforms
-import numpy as np
 from torch.autograd import Variable
-import torch.optim
 
 #Iterative Target Class method
 def iterative_target(label_idx, labels, output, img_var, image_tensor, resnet):
     y_true = label_idx
     target = Variable(torch.LongTensor([y_true]), requires_grad=False)
 
-    eps = 1.0
+    eps = 0.02
     
     num_steps = 5
     alpha = 0.025
 
+    img_var.data = image_tensor
+        
     for i in range(num_steps):
         resnet.zero_grad()
         output  = resnet.forward(img_var)
@@ -30,7 +30,7 @@ def iterative_target(label_idx, labels, output, img_var, image_tensor, resnet):
         total_grad = adv_temp - image_tensor                  #total perturbation
         total_grad = torch.clamp(total_grad, -eps, eps)
         adv = image_tensor + total_grad                      #add total perturbation to the original image
-        img_var.data = image_tensor
+        img_var.data = adv
 
     output_adv = resnet.forward(Variable(adv))  
     x_adv = labels[torch.max(output_adv.data, 1)[1][0]]    
@@ -45,7 +45,7 @@ def basic_iterative(label_idx, labels, output, img_var, image_tensor, resnet):
     y_true = label_idx
     target = Variable(torch.LongTensor([y_true]), requires_grad=False)
     
-    eps = 0.90
+    eps = 0.02
     num_steps = 5
     alpha = 0.025
 
@@ -69,10 +69,6 @@ def basic_iterative(label_idx, labels, output, img_var, image_tensor, resnet):
     adv_percentage = round(op_adv_prob[index1[0]].item(), 4)
 
     return [x_adv, adv_percentage]
-
-        
-                      
-    
     
 #One-step target class method
 
@@ -80,13 +76,13 @@ def one_step_target(label_idx, labels, output, img_var, resnet):
     y_target = label_idx
     target = Variable(torch.LongTensor([y_target]), requires_grad=False)
     
+    resnet.zero_grad()
     loss = torch.nn.CrossEntropyLoss()
     loss_cal = loss(output, target)
-    resnet.zero_grad()
     loss_cal.backward(retain_graph=True)
  
     
-    eps = 0.90
+    eps = 0.75
     grad = torch.sign(img_var.grad.data)                
     adversarial = img_var.data - eps * grad           
     output_adv = resnet.forward(Variable(adversarial))  
@@ -108,7 +104,7 @@ def fast_gradient(label_idx, labels, output, img_var, resnet):
     loss_cal.backward(retain_graph=True) 
 
 #higher epsilon value = more preturbation in the image = change in class *smaller values change percentage but not class
-    eps = 0.60
+    eps = 0.02
     grad = torch.sign(img_var.grad.data)                #calculate the sign of gradient of the loss func (with respect to input X) (adv)
     adversarial = img_var.data + eps * grad          #find adv example using formula 
     output_adv = resnet.forward(Variable(adversarial))   #perform a forward pass on adv example
@@ -122,11 +118,12 @@ def fast_gradient(label_idx, labels, output, img_var, resnet):
 
 
 def main():
-    resnet  = models.resnet50(pretrained=True)
-    img = Image.open("/home/katelynn/Downloads/__MACOSX/img_4_v1.png").convert('RGB')
+    resnet = models.resnet50(pretrained=True)
+    img = Image.open("/home/katelynn/Downloads/__MACOSX/img_7_v1.png").convert('RGB')
     resnet.eval()
     preprocess = transforms.Compose([
-        transforms.Resize(224),
+        transforms.Resize(256),
+        #transforms.ColorJitter(brightness=5, contrast=5, saturation=5, hue=0),
         transforms.ToTensor(),
         transforms.Normalize(
         mean=[0.485, 0.456, 0.406],
@@ -143,6 +140,7 @@ def main():
     with open('/home/katelynn/Desktop/imagenet_classes.txt') as f:
         labels = [line.strip() for line in f.readlines()]
     img_out = labels[label_idx]
+    print("Original Confidence:")
     print(img_out)
 
 #calculates probability
@@ -151,29 +149,29 @@ def main():
     percentage = round(prob[index[0]].item(), 4)
     print(percentage)
     #runs the fast gradient sign method
+    print("Fast Gradient: ")
     adv = fast_gradient(label_idx, labels, output, img_var, resnet)
     for i in range(0, len(adv)):
         print(adv[i])
     #runs the one-step target class method
-    
+    print("One-step target class: ")
     adv_os = one_step_target(label_idx, labels, output, img_var, resnet)
     for i in range(0, len(adv_os)):
         print(adv_os[i])
 
     #runs the basic iterative method
+    print("Basic Iterative:")
     adv_bi = basic_iterative(label_idx, labels, output, img_var, img_tensor, resnet)
     for i in range(0, len(adv_bi)):
         print(adv_bi[i])
 
+    #runs iterative target class method
+    print("Iterative Target Class:")
     adv_it = iterative_target(label_idx, labels, output, img_var, img_tensor, resnet)
     for i in range(0, len(adv_it)):
         print(adv_it[i])
                 
 main()
-
-
-
-    
 
 
 
