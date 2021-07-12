@@ -506,36 +506,36 @@ def main():
             with open('/home/katelynn/Desktop/imagenet_classes.txt') as f:
                 labels = [line.strip() for line in f.readlines()]
                 img_out = labels[label_idx]
-                print("Original Confidence:")
-                print(img_out)
+               # print("Original Confidence:")
+               # print(img_out)
                  
          #calculates probability
             _, index = torch.max(output, 1)
             prob = torch.nn.functional.softmax(output, dim=1)[0] * 100
             percentage = round(prob[index[0]].item(), 4)
-            print(percentage)
+           # print(percentage)
             #runs the fast gradient sign method
-            print("Fast Gradient: ")
+           # print("Fast Gradient: ")
             adv = fast_gradient(label_idx, labels, output, img_var, resnet)
-            for i in range(0, len(adv)):
-                print(adv[i]) 
+           # for i in range(0, len(adv)):
+           #      print(adv[i]) 
                 #runs the one-step target class method
-            print("One-step target class: ")
+           # print("One-step target class: ")
             adv_os = one_step_target(label_idx, labels, output, img_var, resnet)
-            for i in range(0, len(adv_os)):
-                print(adv_os[i])
+            #for i in range(0, len(adv_os)):
+                #print(adv_os[i])
 
              #runs the basic iterative method
-            print("Basic Iterative:")
+           # print("Basic Iterative:")
             adv_bi = basic_iterative(label_idx, labels, output, img_var, img_tensor, resnet)
-            for i in range(0, len(adv_bi)):
-                print(adv_bi[i])
+           # for i in range(0, len(adv_bi)):
+                #print(adv_bi[i])
 
              #runs iterative target class method
-            print("Iterative Target Class:")
+           # print("Iterative Target Class:")
             adv_it = iterative_target(label_idx, labels, output, img_var, img_tensor, resnet)
-            for i in range(0, len(adv_it)):
-                print(adv_it[i])
+            #for i in range(0, len(adv_it)):
+                #print(adv_it[i])
 
             fig = plt.figure(figsize=(15, 10))
             ax = fig.add_subplot(111)
