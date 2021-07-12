@@ -468,9 +468,9 @@ def fast_gradient(label_idx, labels, output, img_var, resnet):
 
     return [x_adv, adv_percentage]
 
-def addlabels(x,y):
-    for i in range(len(x)):
-        plt.text(i,y[i],y[i])
+#def addlabels(x,y):
+   #for i in range(len(x)):
+       #plt.text(i,y[i],y[i]) 
 
 
 def main():
@@ -518,7 +518,7 @@ def main():
             print("Fast Gradient: ")
             adv = fast_gradient(label_idx, labels, output, img_var, resnet)
             for i in range(0, len(adv)):
-                print(adv[i])
+                print(adv[i]) 
                 #runs the one-step target class method
             print("One-step target class: ")
             adv_os = one_step_target(label_idx, labels, output, img_var, resnet)
@@ -537,15 +537,17 @@ def main():
             for i in range(0, len(adv_it)):
                 print(adv_it[i])
 
-            fig = plt.figure()
+            fig = plt.figure(figsize=(15, 10))
             ax = fig.add_subplot(111)
-            classes = ['OG Prediction', 'Fast Gradient ', 'One-step target', 'Basic Iterative', 'Iterative Target']
+            classes = [f"OG Confidence: \n {img_out}", f"Fast Gradient: \n {adv[0]}", f"One-Step Target: \n {adv_os[0]}", f"Basic Iterative: \n {adv_bi[0]}", f"Iterative Target: \n {adv_it[0]}"]
             probabilities = [percentage, adv[1], adv_os[1], adv_bi[1], adv_it[1]]
-            ax.bar(classes,probabilities)
+            plt.barh(classes, probabilities)
+            for index, value in enumerate(probabilities):
+                plt.text(value, index, str(value))
             plt.title(f"{line} Class probabilities")
-            addlabels(classes, probabilities)
             fig.autofmt_xdate()
-            plt.show()
+            fig.savefig(f"Graphs/{line}", bbox_inches='tight')
+           # plt.show()
 
 main()
 
