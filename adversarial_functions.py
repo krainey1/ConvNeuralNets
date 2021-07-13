@@ -137,7 +137,7 @@ def main():
     
             resnet.eval()
             preprocess = transforms.Compose([
-                 #transforms.Resize(256),
+                 transforms.Resize(256),
                  #transforms.ColorJitter(brightness=5, contrast=5, saturation=5, hue=0),
                  transforms.ToTensor(),
                  transforms.Normalize(
