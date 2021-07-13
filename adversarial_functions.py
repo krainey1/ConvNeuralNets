@@ -482,7 +482,7 @@ def main():
         for line in file:
             line = line.replace("\n", "")
             print(line)
-            img = Image.open(f"/home/katelynn/Desktop/katelynnn_sample_images/{line}")
+            img = Image.open(f"/home/katelynn/Desktop/katelynnn_sample_images/{line}").convert('RGB')
     
             resnet.eval()
             preprocess = transforms.Compose([
@@ -547,7 +547,7 @@ def main():
             plt.title(f"{line} Class probabilities")
             fig.autofmt_xdate()
             fig.savefig(f"Graphs/{line}", bbox_inches='tight')
-           # plt.show()
+            #plt.show()
 
 main()
 
