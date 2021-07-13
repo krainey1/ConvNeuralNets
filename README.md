@@ -1,6 +1,5 @@
 # How Simple Image Transformations Effect The Adversarial Nature of Images
 
-## Description
 This is Katelynn Rainey's project for the 2021 internship at the Institute for Computing in Research. Licensed under the GNU General Public License 3.0.
 
 ## Installation
