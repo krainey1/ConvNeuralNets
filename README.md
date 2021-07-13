@@ -20,8 +20,8 @@ adversarial_fast_gradient.py
 Generates the adversarial image for the input image and spits back the identified class label and probability of the adversarial image and the original identification. (by changing the gradient)
 
 adversarial_functions.py
-*subject to change
-This script runs 4 different methods for generating adversarial functions, which is tested by running images through an image processing pipeline and generating the class labels and probabilities for each. Output is currently in the form of a bar graph using matplotlib that autosaves graphs to the Graphs/ directory.
+(subject to change)
+This script runs 4 different methods for generating adversarial functions, which is tested by running images through an image processing pipeline and generating the class labels and probabilities for each. Output is currently in the form of a bar graph using matplotlib that autosaves graphs to the Graphs/ directory. This is where image transformations are being tested (e.g. resizing, color jittering, etc.)
 
 ## Notes
 
