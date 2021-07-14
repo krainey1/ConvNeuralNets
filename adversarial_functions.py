@@ -128,11 +128,13 @@ def main():
     resnet = models.resnet50(pretrained=True)
     #img = Image.open("/home/katelynn/Downloads/__MACOSX/img_7_v1.png").convert('RGB')
     #aengus jank code 
-        
+
+    #Change file path here to where images.txt is being stored
     with open('/home/katelynn/Desktop/Convnets-and-adversarial-functions/images.txt') as file:
         for line in file:
             line = line.replace("\n", "")
             print(line)
+            #adjust file to where the sample image folder is located
             img = Image.open(f"/home/katelynn/Desktop/Convnets-and-adversarial-functions/katelynnn_sample_images/{line}").convert('RGB')
     
             resnet.eval()
@@ -152,8 +154,8 @@ def main():
             output = resnet.forward(img_var)
             label_idx = torch.max(output.data, 1)[1][0]   #get an index(class number) of a largest element
 
-            
 
+            #adjust file path to where imagenet_classes.txt is located 
             with open('/home/katelynn/Desktop/Convnets-and-adversarial-functions/imagenet_classes.txt') as f:
                 labels = [line.strip() for line in f.readlines()]
                 img_out = labels[label_idx]
@@ -197,7 +199,8 @@ def main():
                 plt.text(value, index, str(value))
             plt.title(f"{line} Class probabilities")
             fig.autofmt_xdate()
-            fig.savefig(f"Graphs/{line}", bbox_inches='tight')
+            #adjust where the images will be saved to
+            fig.savefig(f"resized_images_graphs/{line}", bbox_inches='tight')
             #plt.show()
 
 main()
