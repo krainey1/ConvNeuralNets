@@ -4,6 +4,7 @@ resnet = models.resnet50(pretrained=True)
 
 #gets and opens image *manually switch image for each test
 from PIL import Image
+#adjust file path to point where test image is
 img = Image.open("/home/katelynn/Downloads/__MACOSX/img_7_v2.png").convert('RGB')
 
 from torchvision import transforms
@@ -27,7 +28,8 @@ resnet.eval()
 
 out = resnet(batch_img_tensor)
 
-# Loads file containing the 1,000 labels 
+# Loads file containing the 1,000 labels
+# Adjust file path to where labels are located
 with open('/home/katelynn/Desktop/imagenet_classes.txt') as f:
     labels = [line.strip() for line in f.readlines()]
 
