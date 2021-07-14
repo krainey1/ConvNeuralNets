@@ -11,6 +11,7 @@ from torch.autograd import Variable
 
 #gets model
 inceptionv3 = models.inception_v3(pretrained=True)
+#adjust file path to a (single) image input
 img = Image.open("/home/katelynn/Downloads/__MACOSX/img_4_v1.png").convert('RGB')
 inceptionv3.eval()
 
@@ -30,7 +31,7 @@ img_var = Variable(img_tensor, requires_grad=True)
 output = inceptionv3.forward(img_var)
 label_idx = torch.max(output.data, 1)[1][0]   #get an index(class number) of a largest element
 print(label_idx)
-   
+#adjust file path to where class labels are located
 with open('/home/katelynn/Desktop/imagenet_classes.txt') as f:
     labels = [line.strip() for line in f.readlines()]
 img_out = labels[label_idx]
