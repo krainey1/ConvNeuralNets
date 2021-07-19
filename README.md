@@ -9,7 +9,7 @@ To install use:
 git clone https://github.com/krainey1/Convnets-and-adversarial-functions
 ```
 then adjust file paths within .py files to test the program(s).
-Also adjust imagse.txt file to reflect which .JPEG images (all 100 will be run through currently) will be running through the program (only applicable for adversarial_functions.py)
+Also adjust images.txt file to reflect which .JPEG images (all 100 will be run through currently) will be running through the program (only applicable for adversarial_functions.py)
 
 ## Description
 
