@@ -7,6 +7,7 @@ from PIL import Image
 from torchvision import transforms
 from torch.autograd import Variable
 import matplotlib.pyplot as plt
+import time 
 
 
 #Iterative Target Class method
@@ -201,7 +202,8 @@ def main():
             plt.title(f"{line} Class probabilities")
             fig.autofmt_xdate()
             #adjust where the images will be saved to
-            fig.savefig(f"cropped_tests/{line}", bbox_inches='tight')
+            fig.savefig(f"test_folder/{line}", bbox_inches='tight')
+            time.sleep(10)
             #plt.show()
 
 main()
