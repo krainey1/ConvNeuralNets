@@ -1,4 +1,4 @@
-# How Simple Image Transformations Effect The Adversarial Nature of Images
+# How Simple Image Transformations Affect The Adversarial Nature of Images
 
 This is Katelynn Rainey's project for the 2021 internship at the Institute for Computing in Research. Licensed under the GNU General Public License 3.0.
 
@@ -9,7 +9,7 @@ To install use:
 git clone https://github.com/krainey1/Convnets-and-adversarial-functions
 ```
 then adjust file paths within .py files to test the program(s).
-Also adjust image.txt file to reflect which .JPEG images will be running through the program (only applicable for adversarial_functions.py)
+Also adjust imagse.txt file to reflect which .JPEG images (all 100 will be run through currently) will be running through the program (only applicable for adversarial_functions.py)
 
 ## Description
 
@@ -21,7 +21,9 @@ Generates the adversarial image for the input image and spits back the identifie
 
 adversarial_functions.py
 (subject to change)
-This script runs 4 different methods for generating adversarial functions, which is tested by running images through an image processing pipeline and generating the class labels and probabilities for each. Output is currently in the form of a bar graph using matplotlib that autosaves graphs to the Graphs/ directory. This is where image transformations are being tested (e.g. resizing, color jittering, etc.)
+This script runs 4 different methods for generating adversarial functions, which is tested by running images through an image processing pipeline and generating the class labels and probabilities for each. Output is currently in the form of a bar graph using matplotlib that autosaves graphs to the Graphs/ directory. This is where image transformations are being tested (e.g. resizing, cropping, brightess, contrast.)
+
+NEW: time library has been imported to adversarial_functions.py, pauses after each execution for 15 seconds before continuing to prevent the killing of the program on longer runs
 
 ## Notes
 
