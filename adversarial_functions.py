@@ -141,7 +141,7 @@ def main():
             resnet.eval()
             preprocess = transforms.Compose([
                  #transforms.Resize(256),
-                 transforms.CenterCrop(224),
+                 #transforms.CenterCrop(224),
                  transforms.ToTensor(),
                  transforms.Normalize(
                      mean=[0.485, 0.456, 0.406],
@@ -150,6 +150,7 @@ def main():
 
             img_tensor = preprocess(img)
             #img_tensor = transforms.functional.adjust_brightness(img_tensor, 2)
+            img_tensor = transforms.functional.adjust_contrast(img_tensor, 2)
             img_tensor = img_tensor.unsqueeze(0)
             img_var = Variable(img_tensor, requires_grad=True)
 
@@ -202,8 +203,8 @@ def main():
             plt.title(f"{line} Class probabilities")
             fig.autofmt_xdate()
             #adjust where the images will be saved to
-            fig.savefig(f"test_folder/{line}", bbox_inches='tight')
-            time.sleep(10)
+            fig.savefig(f"contrast_tests/{line}", bbox_inches='tight')
+            time.sleep(15)
             #plt.show()
 
 main()
